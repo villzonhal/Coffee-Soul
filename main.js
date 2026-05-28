@@ -99,7 +99,7 @@ function initNews() {
             const news = newsData.find(n => n.id == id);
             if (news) {
                 document.getElementById('modalTitle').innerText = news.title;
-                document.getElementById('modalFullText').innerHTML = `<p>${news.full}</p><img src="${news.img}" style="width:100%; border-radius:20px; margin-top:1rem">`;
+                document.getElementById('modalFullText').innerHTML = '<p>' + news.full + '</p><img src="' + news.img + '" style="width:100%; border-radius:20px; margin-top:1rem">';
                 document.getElementById('newsModal').style.display = 'flex';
             }
         });
@@ -124,69 +124,157 @@ function initCards() {
     }
 }
 
-// ========== ГАЛЕРЕЯ С КНОПКАМИ ==========
-const galleryImages = [
-    "https://placehold.co/900x600/d4b48c/5a3e2b?text=Latte+Art+1",
-    "https://placehold.co/900x600/cfaa7a/5a3e2b?text=Roastery",
-    "https://placehold.co/900x600/b88f5e/5a3e2b?text=Pourover",
-    "https://placehold.co/900x600/a57447/5a3e2b?text=Barista",
-    "https://placehold.co/900x600/936a42/5a3e2b?text=Coffee+Beans",
-    "https://placehold.co/900x600/7a5839/5a3e2b?text=Latte+Art+2"
-];
+// ========== СЛАЙДЕР ГАЛЕРЕИ ==========
+function initGallerySlider() {
+    const slides = [
+        { image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1800&auto=format&fit=crop", title: "Авторский кофе", text: "Свежая обжарка, уютная атмосфера и любовь к деталям." },
+        { image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1800&auto=format&fit=crop", title: "Идеальный латте", text: "Каждая чашка готовится профессиональным бариста." },
+        { image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1800&auto=format&fit=crop", title: "Атмосфера Coffee Soul", text: "Место для отдыха, общения и вдохновения." },
+        { image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1800&auto=format&fit=crop", title: "Свежая выпечка", text: "Круассаны и десерты идеально дополняют кофе." }
+    ];
 
-let currentIndex = 0;
-
-function updateMainImage() {
-    const bigImg = document.getElementById('bigimg');
-    if (bigImg) {
-        bigImg.src = galleryImages[currentIndex];
-        bigImg.alt = 'Фото ' + (currentIndex + 1);
-    }
-    
-    const thumbnails = document.getElementById('thumbnails');
-    if (thumbnails) {
-        thumbnails.innerHTML = galleryImages.map((img, idx) => `
-            <img src="${img}" width="90" height="90" style="object-fit:cover; border-radius:12px; cursor:pointer; border: ${idx === currentIndex ? '3px solid #c47a3a' : '2px solid #ddd'}; transition:0.2s;" onclick="setImage(${idx})" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-        `).join('');
-    }
-}
-
-function setImage(index) {
-    currentIndex = index;
-    updateMainImage();
-}
-
-function prevImage() {
-    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-    updateMainImage();
-}
-
-function nextImage() {
-    currentIndex = (currentIndex + 1) % galleryImages.length;
-    updateMainImage();
-}
-
-function initGallery() {
-    updateMainImage();
-    
+    const imgEl = document.getElementById('galleryImage');
+    const headingEl = document.getElementById('galleryHeading');
+    const textEl = document.getElementById('galleryText');
+    const progressBar = document.getElementById('progressBar');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    
-    if (prevBtn) {
-        prevBtn.onclick = prevImage;
-        prevBtn.onmouseover = () => prevBtn.style.background = '#c47a3a';
-        prevBtn.onmouseout = () => prevBtn.style.background = '#8B5A2B';
+
+    if (!imgEl) return;
+
+    let currentSlide = 0;
+    let autoPlayInterval;
+
+    function updateSlide(index) {
+        imgEl.style.opacity = 0;
+        setTimeout(() => {
+            imgEl.src = slides[index].image;
+            headingEl.textContent = slides[index].title;
+            textEl.textContent = slides[index].text;
+            imgEl.style.opacity = 1;
+        }, 200);
+
+        progressBar.style.animation = 'none';
+        void progressBar.offsetWidth;
+        progressBar.style.animation = 'progress 5s linear infinite';
     }
-    if (nextBtn) {
-        nextBtn.onclick = nextImage;
-        nextBtn.onmouseover = () => nextBtn.style.background = '#c47a3a';
-        nextBtn.onmouseout = () => nextBtn.style.background = '#8B5A2B';
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlide(currentSlide);
     }
-    
-    window.setImage = setImage;
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        updateSlide(currentSlide);
+    }
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayInterval = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayInterval) clearInterval(autoPlayInterval);
+    }
+
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        startAutoPlay();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        startAutoPlay();
+    });
+
+    const slider = document.querySelector('.gallery-slider');
+    slider.addEventListener('mouseenter', stopAutoPlay);
+    slider.addEventListener('mouseleave', startAutoPlay);
+
+    updateSlide(0);
+    startAutoPlay();
 }
 
-// ========== ФОРМА С LOCALSTORAGE ==========
+// ========== КАРТА КОНТАКТОВ ==========
+function initContactMap() {
+    const mapContainer = document.getElementById('map');
+    if (!mapContainer) return;
+
+    const coffeeCoords = [58.016638, 55.965716];
+    let userPlacemark, accuracyCircle;
+    let map = new ymaps.Map("map", {
+        center: coffeeCoords,
+        zoom: 16,
+        controls: ["zoomControl", "geolocationControl"]
+    });
+
+    const coffeePlacemark = new ymaps.Placemark(coffeeCoords, {
+        hintContent: "Coffee Soul",
+        balloonContent: "Coffee Soul, г. Пермь, ул. Магистральная, 89/2"
+    }, { preset: "islands#redIcon" });
+    map.geoObjects.add(coffeePlacemark);
+
+    function setStatus(text, type) {
+        const el = document.getElementById('geoText');
+        if (el) {
+            el.textContent = text;
+            el.className = 'geo-status ' + type;
+        }
+    }
+
+    document.getElementById('findMeBtn')?.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+            setStatus("Геолокация не поддерживается", "error");
+            return;
+        }
+        setStatus("Определяем местоположение...", "info");
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                const accuracy = position.coords.accuracy;
+                const userCoords = [lat, lon];
+
+                if (accuracy > 2000) {
+                    setStatus("Нет точного GPS сигнала", "error");
+                    map.setCenter(coffeeCoords, 15);
+                    return;
+                }
+
+                if (userPlacemark) map.geoObjects.remove(userPlacemark);
+                if (accuracyCircle) map.geoObjects.remove(accuracyCircle);
+
+                userPlacemark = new ymaps.Placemark(userCoords, {
+                    hintContent: "Вы здесь",
+                    balloonContent: "Ваше местоположение"
+                }, { preset: "islands#blueCircleDotIcon" });
+
+                accuracyCircle = new ymaps.Circle([userCoords, accuracy], {}, {
+                    fillColor: "#1e88e5", fillOpacity: 0.15,
+                    strokeColor: "#1e88e5", strokeWidth: 2
+                });
+
+                map.geoObjects.add(userPlacemark);
+                map.geoObjects.add(accuracyCircle);
+
+                const bounds = ymaps.util.bounds.fromPoints([coffeeCoords, userCoords]);
+                map.setBounds(bounds, { zoomMargin: 80, checkZoomRange: true });
+                setStatus("Вы определены (точность ~" + Math.round(accuracy) + " м)", "success");
+            },
+            () => {
+                setStatus("Не удалось получить геолокацию", "error");
+                map.setCenter(coffeeCoords, 16);
+            },
+            { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+        );
+    });
+
+    setStatus("Готово. Нажмите кнопку Найти меня", "info");
+}
+
+// ========== ФОРМА ==========
 function loadEntries() {
     const saved = localStorage.getItem('coffeeFormEntries');
     if (saved) formEntries = JSON.parse(saved);
@@ -273,6 +361,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initDateTime();
     initNews();
     initCards();
-    initGallery();
+    initGallerySlider();
+    // Карта инициализируется только после загрузки API Яндекс.Карт
+    if (document.getElementById('map')) {
+        ymaps.ready(initContactMap);
+    }
     initForm();
 });
