@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Coffee Soul - Галерея</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .gallery-page {
+
+            padding-top: 15px;
+            padding-bottom: 80px;
+        }
+        .gallery-title {
+
+            text-align: center;
+
+            margin-bottom: 20px;
+        }
+
+        .gallery-title h1 {
+
+            font-size: 52px;
+
+            margin-bottom: 10px;
+
+            color: var(--text);
+        }
+
+        .gallery-title p {
+
+            color: var(--text-soft);
+
+            font-size: 18px;
+        }
+
+        .gallery-slider {
+
+            position: relative;
+
+            width: 100%;
+            max-width: 1250px;
+
+            height: 75vh;
+
+            margin: 0 auto;
+
+            overflow: hidden;
+
+            border-radius: 30px;
+
+            background: white;
+
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .gallery-slider img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-overlay {
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+
+            padding: 40px;
+
+            background: linear-gradient(
+                    to top,
+                    rgba(0,0,0,0.65),
+                    transparent
+            );
+
+            color: white;
+        }
+
+        .gallery-overlay h2 {
+
+            font-size: 36px;
+
+            margin-bottom: 10px;
+        }
+
+        .gallery-overlay p {
+
+            font-size: 16px;
+
+            opacity: 0.9;
+        }
+
+        .gallery-btn {
+
+            position: absolute;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 60px;
+            height: 60px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: rgba(0,0,0,0.45);
+
+            color: white;
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+            z-index: 10;
+
+            transition: 0.25s;
+        }
+
+        .gallery-btn:hover {
+
+            background: #8B5A2B;
+
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .gallery-btn.prev {
+
+            left: 25px;
+        }
+
+        .gallery-btn.next {
+
+            right: 25px;
+        }
+
+        .gallery-progress {
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 5px;
+
+            background: rgba(255,255,255,0.2);
+        }
+
+        .gallery-progress-bar {
+
+            height: 100%;
+
+            width: 0;
+
+            background: #8B5A2B;
+
+            animation: progress 5s linear infinite;
+        }
+
+        @keyframes progress {
+
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .gallery-slider {
+
+                height: 58vh;
+            }
+
+            .gallery-overlay {
+
+                padding: 25px;
+            }
+
+            .gallery-overlay h2 {
+
+                font-size: 28px;
+            }
+
+            .gallery-title h1 {
+
+                font-size: 38px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .gallery-slider {
+
+                height: 42vh;
+
+                border-radius: 22px;
+            }
+
+            .gallery-btn {
+
+                width: 48px;
+                height: 48px;
+
+                font-size: 18px;
+            }
+
+            .gallery-overlay {
+
+                padding: 20px;
+            }
+
+            .gallery-overlay h2 {
+
+                font-size: 22px;
+            }
+
+            .gallery-overlay p {
+
+                font-size: 14px;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+
+<header class="header">
+
+    <div class="nav-container">
+
+        <div class="logo">
+            <span class="coffee">Coffee</span><span class="soul">Soul</span>
+        </div>
+
+        <button class="burger-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="news.html">Новости</a></li>
+            <li><a href="cards.html">Коллекция</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <li><a href="menu.html">Меню</a></li>
+            <li><a href="gallery.html">Галерея</a></li>
+            <li><a href="form.html">Анкета</a></li>
+        </ul>
+
+    </div>
+
+</header>
+
+<nav class="mobile-menu">
+
+    <a href="index.html">Главная</a>
+    <a href="news.html">Новости</a>
+    <a href="cards.html">Коллекция</a>
+    <a href="contacts.html">Контакты</a>
+    <a href="menu.html">Меню</a>
+    <a href="gallery.html">Галерея</a>
+    <a href="form.html">Анкета</a>
+
+</nav>
+
+<main class="gallery-page">
+
+    <div class="container">
+
+        <div class="gallery-title">
+
+            <h1>Фотогалерея</h1>
+
+            <p>
+                Атмосфера Coffee Soul в каждом кадре
+            </p>
+
+        </div>
+
+        <div class="gallery-slider">
+
+            <button class="gallery-btn prev" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <img id="galleryImage"
+                 src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1800&auto=format&fit=crop"
+                 alt="Coffee Soul">
+
+            <button class="gallery-btn next" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div class="gallery-overlay">
+
+                <h2 id="galleryHeading">
+                    Авторский кофе
+                </h2>
+
+                <p id="galleryText">
+                    Свежая обжарка, уютная атмосфера и любовь к деталям.
+                </p>
+
+            </div>
+
+            <div class="gallery-progress">
+
+                <div class="gallery-progress-bar" id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-section">
+
+            <h4>Coffee Soul</h4>
+
+            <p>Кофе с душой и характером</p>
+
+            <div class="social-links">
+
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-section">
+
+            <h4>Разделы</h4>
+
+            <ul>
+
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="cards.html">Коллекция</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="gallery.html">Галерея</a></li>
+                <li><a href="form.html">Анкета</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-section">
+
+            <h4>Контакты</h4>
+
+            <p>
+                <i class="fas fa-map-marker-alt"></i>
+                г. Пермь, ул. Магистральная, 89/2
+            </p>
+
+            <p>
+                <i class="fas fa-phone"></i>
+                +7 (495) 123-45-67
+            </p>
+
+            <p>
+                <i class="fas fa-envelope"></i>
+                hello@coffeesoul.ru
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>2025 Coffee Soul. Все права защищены.</p>
+
+    </div>
+
+</footer>
+
+<script>
+
+const slides = [
+
+    {
+        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1800&auto=format&fit=crop",
+        title: "Авторский кофе",
+        text: "Свежая обжарка, уютная атмосфера и любовь к деталям."
+    },
+
+    {
+        image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1800&auto=format&fit=crop",
+        title: "Идеальный латте",
+        text: "Каждая чашка готовится профессиональным бариста."
+    },
+
+    {
+        image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1800&auto=format&fit=crop",
+        title: "Атмосфера Coffee Soul",
+        text: "Место для отдыха, общения и вдохновения."
+    },
+
+    {
+        image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1800&auto=format&fit=crop",
+        title: "Свежая выпечка",
+        text: "Круассаны и десерты идеально дополняют кофе."
+    }
+
+];
+
+let currentSlide = 0;
+
+const image = document.getElementById('galleryImage');
+const heading = document.getElementById('galleryHeading');
+const text = document.getElementById('galleryText');
+const progress = document.getElementById('progressBar');
+
+function updateSlide(index) {
+
+    image.style.opacity = 0;
+
+    setTimeout(() => {
+
+        image.src = slides[index].image;
+
+        heading.textContent = slides[index].title;
+
+        text.textContent = slides[index].text;
+
+        image.style.opacity = 1;
+
+    }, 200);
+
+    progress.style.animation = 'none';
+
+    void progress.offsetWidth;
+
+    progress.style.animation = 'progress 5s linear infinite';
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+
+    currentSlide++;
+
+    if (currentSlide >= slides.length) {
+
+        currentSlide = 0;
+    }
+
+    updateSlide(currentSlide);
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+
+    currentSlide--;
+
+    if (currentSlide < 0) {
+
+        currentSlide = slides.length - 1;
+    }
+
+    updateSlide(currentSlide);
+});
+
+setInterval(() => {
+
+    currentSlide++;
+
+    if (currentSlide >= slides.length) {
+
+        currentSlide = 0;
+    }
+
+    updateSlide(currentSlide);
+
+}, 5000);
+
+</script>
+
+<script src="main.js"></script>
+
+</body>
+</html>

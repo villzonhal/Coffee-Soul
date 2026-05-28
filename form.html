@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Soul - Анкета</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="coffee">Coffee</span><span class="soul">Soul</span>
+            </div>
+            <button class="burger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="cards.html">Коллекция</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="gallery.html">Галерея</a></li>
+                <li><a href="form.html">Анкета</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <nav class="mobile-menu">
+        <a href="index.html">Главная</a>
+        <a href="news.html">Новости</a>
+        <a href="cards.html">Коллекция</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="menu.html">Меню</a>
+        <a href="gallery.html">Галерея</a>
+        <a href="form.html">Анкета</a>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Анкета ценителя кофе</h2>
+            <p style="margin-bottom:1rem;">Расскажите о своих предпочтениях и получите персональную скидку 10 процентов</p>
+            <form id="coffeeForm">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Имя</label>
+                        <input type="text" id="name" placeholder="Ваше имя">
+                    </div>
+                    <div class="form-field">
+                        <label>Email</label>
+                        <input type="email" id="email" placeholder="example@mail.com">
+                    </div>
+                    <div class="form-field">
+                        <label>Телефон</label>
+                        <input type="tel" id="phone" placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <div class="form-field">
+                        <label>Дата рождения</label>
+                        <input type="date" id="dob">
+                    </div>
+                    <div class="form-field">
+                        <label>Любимый способ заваривания</label>
+                        <select id="brew">
+                            <option>Воронка (V60)</option>
+                            <option>Френч-пресс</option>
+                            <option>Турка</option>
+                            <option>Эспрессо-машина</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Степень обжарки</label>
+                        <select id="roast">
+                            <option>Светлая</option>
+                            <option selected>Средняя</option>
+                            <option>Тёмная</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Чашек в день</label>
+                        <input type="number" id="cups" min="0" placeholder="сколько чашек">
+                    </div>
+                    <div class="form-field">
+                        <label>Любимый регион</label>
+                        <input id="region" placeholder="Эфиопия, Колумбия...">
+                    </div>
+                    <div class="form-field">
+                        <label>Любимые добавки</label>
+                        <input id="additives" placeholder="молоко, сироп, корица...">
+                    </div>
+                    <div class="form-field full-width">
+                        <label>Комментарий</label>
+                        <textarea id="comment" rows="3" placeholder="Пожелания или вопросы"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="form-btn">Отправить анкету</button>
+                <div id="formResult" class="form-result" style="display:none;"></div>
+            </form>
+            <div class="saved-entries">
+                <h3>Сохранённые анкеты (максимум 3)</h3>
+                <div id="savedEntriesList"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Coffee Soul</h4>
+                <p>Кофе с душой и характером</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Разделы</h4>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="news.html">Новости</a></li>
+                    <li><a href="cards.html">Коллекция</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                    <li><a href="menu.html">Меню</a></li>
+                    <li><a href="gallery.html">Галерея</a></li>
+                    <li><a href="form.html">Анкета</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <p><i class="fas fa-map-marker-alt"></i> г. Пермь, ул. Магистральная, 89/2</p>
+                <p><i class="fas fa-phone"></i> +7 (495) 123-45-67</p>
+                <p><i class="fas fa-envelope"></i> hello@coffeesoul.ru</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>2025 Coffee Soul. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
